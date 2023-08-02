@@ -15,6 +15,15 @@ directly; any base layer should instead use
 :func:`~charms.reactive.flags.register_trigger` to "wrap" the automatic flag
 with a layer-specific flag that can be safely used within that layer.
 
+It is worth mentioning that any set flag will execute on every hook run as
+long as it stays set. This means that code inside a function wrapped in,
+for example, ``endpoint.{endpoint_name}.joined`` will run every time hooks
+run when .joined is true. This could be due to something completely unrelated
+such as relation data changing or even an update-status hook. It is best
+not to rely on such things due to the obfusificative nature of the code as
+it makes it harder for someone to reason about, but it is a good point to
+remember.
+
 The flags that are set by the framework are:
 
 +----------------------------------------------+------------------------------------------------------------+
